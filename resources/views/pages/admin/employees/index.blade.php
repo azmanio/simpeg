@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <h2>Daftar Pegawai</h2>
-        <a class="btn btn-success" href="{{ route('employees.create') }}">Tambah Pegawai</a>
+        <h2 class="mt-3">Daftar Pegawai</h2>
+        <a class="btn btn-success my-2" href="{{ route('employees.create') }}">Tambah Pegawai</a>
 
         @if ($message = Session::get('success'))
             <div class="alert alert-success">
@@ -17,18 +17,30 @@
                 <th>Nama</th>
                 <th>Jabatan</th>
                 <th>Gaji</th>
-                <th>Action</th>
+                <th>Departemen</th>
+                <th>Status</th>
+                <th>Aksi</th>
             </tr>
-            @foreach ($employees as $index => $employee)
+            @foreach ($data as $index => $item)
                 <tr>
-                    <td>{{ ++$index }}</td>
-                    <td>{{ $employee->name }}</td>
-                    <td>{{ $employee->position }}</td>
-                    <td>{{ $employee->salary }}</td>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->position }}</td>
+                    <td>{{ $item->salary }}</td>
+                    <td>{{ $item->department ? $item->department->name : '-' }}</td>
                     <td>
-                        <form action="{{ route('employees.destroy', $employee->id) }}" method="POST">
-                            <a class="btn btn-info" href="{{ route('employees.show', $employee->id) }}">Detail</a>
-                            <a class="btn btn-primary" href="{{ route('employees.edit', $employee->id) }}">Edit</a>
+                        <div class="custom-control custom-switch">
+                            <input onclick="window.location.href='{{ route('employees.status', $item) }}'"
+                                {{ $item->status ? 'checked' : '' }} type="checkbox" class="custom-control-input"
+                                id="customSwitch{{ $index }}">
+                            <label class="custom-control-label" for="customSwitch{{ $index }}">
+                                {{ $item->status ? 'Aktif' : 'Cuti' }}
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <form action="{{ route('employees.destroy', $item->id) }}" method="POST">
+                            <a class="btn btn-primary" href="{{ route('employees.edit', $item->id) }}">Edit</a>
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Hapus</button>

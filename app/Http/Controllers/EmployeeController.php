@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
@@ -12,8 +13,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $employees = Employee::all();
-        return view('pages.admin.employees.index',compact('employees') );
+        $data = Employee::all();
+        return view('pages.admin.employees.index', compact('data') );
     }
 
     /**
@@ -21,7 +22,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.employees.create');
+        $department = Department::all();
+        return view('pages.admin.employees.create', compact('department'));
     }
 
     /**
@@ -32,7 +34,8 @@ class EmployeeController extends Controller
         $request->validate([
             'name' => 'required|string',
             'position' => 'required|string',
-            'salary' => 'required|numeric'
+            'salary' => 'required|numeric',
+            'department_id' => 'required|exists:departments,id'
         ]);
 
         Employee::create($request->all());
@@ -52,7 +55,8 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        return view('pages.admin.employees.update', compact('employee'));
+        $department = Department::all();
+        return view('pages.admin.employees.update', compact('employee','department'));
     }
 
     /**
@@ -63,7 +67,8 @@ class EmployeeController extends Controller
         $request->validate([
             'name' => 'required|string',
             'position' => 'required|string',
-            'salary' => 'required|numeric'
+            'salary' => 'required|numeric',
+            'department_id' => 'required|exists:departments,id'
         ]);
 
         $employee->update($request->all());
@@ -78,5 +83,13 @@ class EmployeeController extends Controller
         $employee->delete();
 
         return redirect()->route('employees.index')->with('success','Data Berhasil Dihapus');
+    }
+
+    public function status(Employee $employee)
+    {
+        $employee->status = !$employee->status;
+
+        $employee->save();
+        return redirect()->route('employees.index');
     }
 }

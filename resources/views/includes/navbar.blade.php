@@ -1,21 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">SIMPegawai</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
-        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="navbar navbar-dark bg-primary">
+    <a class="navbar-brand ml-2" href="{{ route('home') }}">
+        <b>SIMPeg</b>
+    </a>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ route('home') }}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('employees.index') }}">Manajemen Pegawai</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="">Manajemen Departemen</a>
-            </li>
-        </ul>
-    </div>
+    <ul class="navbar-nav ml-auto">
+        <a class="nav-item text-white" href="{{ route('login') }}">
+            <i class="fa-solid fa-right-to-bracket"></i>
+            Login
+        </a>
+    </ul>
 </nav>

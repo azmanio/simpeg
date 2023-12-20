@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('position');
             $table->bigInteger('salary');
+            $table->integer('department_id');
+            $table->boolean('status')->default(true);
             $table->timestamps();
-
         });
     }
 
