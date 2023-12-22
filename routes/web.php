@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
@@ -19,17 +20,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'show'])->name('home');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::view('/search-results', 'search-results')->name('search-results');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::get("/logout", [AuthController::class, 'logout'])->name('logout');
 
-
 Route::prefix('/admin/')->middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return view('pages.admin.dashboard');
-    })->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('user', UserController::class);
     Route::get('user/{user}/status', [UserController::class, 'status'])->name('user.status');

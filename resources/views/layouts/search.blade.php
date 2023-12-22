@@ -16,7 +16,7 @@
 
     @yield('content')
 
-    @include('includes.footer')
+    @include('includes.footer-search')
 
     @include('includes.script')
 </body>

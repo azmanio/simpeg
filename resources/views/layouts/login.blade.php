@@ -17,7 +17,7 @@
     @yield('content')
 
     <!-- Footer -->
-    @include('includes.admin.footer')
+    @include('includes.footer-login')
 
     @include('includes.admin.script')
 </body>

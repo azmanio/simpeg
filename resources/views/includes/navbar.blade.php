@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark bg-primary">
+<nav class="navbar navbar-dark bg-success">
     <a class="navbar-brand ml-2" href="{{ route('home') }}">
         <b>SIMPeg</b>
     </a>
